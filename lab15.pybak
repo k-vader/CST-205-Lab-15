@@ -176,10 +176,11 @@ def daysUntilBirthday():
     showInformation("Your birthday is coming up. There are %d days until your next birthday." % daysUntilBirthday.days)
 
 #Ask for the date the declaration of independence was signed and display the day of the week
-def dayOfIndepedence():
+def dayOfIndependence():
   year = int(requestString("Enter the year the Declaration of Independence was ratified:"))
   month = int(requestString("Enter the month the Declaration of Independence was ratified:"))
   day = int(requestString("Enter the day the Declaration of Independence was ratified:"))
-  declarationDate = datetime.date(year, month, day)
+  declarationDay = calendar.weekday(year, month, day)
   
-  showInformation("The declaration of independence was signed on a " + declarationDate.strftime("%A"))
+  
+  showInformation("The declaration of independence was signed on a " + calendar.day_name[declarationDay])
