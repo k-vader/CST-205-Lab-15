@@ -1,3 +1,8 @@
+# Ken Vader
+# Chris Pina
+# Ngoan Nguyen
+# CST-205
+# 12/11/2015
 # Lab 15
 
 import random
@@ -5,28 +10,47 @@ import datetime
 import calendar
 
 # Problem 1
+# Craps Game
+
+# Dice object		
+class Dice(object):
+  # Initialization requires sides and currentValue as integers
+  def __init__(self, sides, currentValue):
+    self.sides = sides
+    self.currentValue = currentValue
+  # For extensibility, we can set the number of sides on the dice	
+  def setSides(self, num):
+    self.sides = num
+  # Method for simulating a dice roll	
+  def doRoll(self):
+    self.currentValue = random.randint(1, self.sides)
+
+# Player object
 class Player(object):
-  
+  # Give the player 2 dice objects to simulate rolling 2 dice
   die1 = Dice(6, 0)
   die2 = Dice(6, 0)
-  
+  # Initialization requires name as a string, money and wager as integers
   def __init__(self, name, money, wager):
     self.name = name
     self.money = money
     self.wager = wager
-    
+  # Method for getting the players name  
   def setName(self):
     self.name = requestString("Enter your name:")
     
     if len(self.name) == 0:
       return self.setName()
-		
+  # Check to see if the player can wager the amount they are attempting to wager
+  # Returns true if they can wager, false otherwise		
   def canWager(self, amount):
     if self.money <= 0 or self.money < amount:
       return False
     else:
       return True
-      
+  # Method for placing a wager, has input validation to ensure an integer
+  # is entered, the player can wager the amount, and also allows for entering
+  # 0 to exit the game    
   def doWager(self):
     self.wager = requestString("Enter an amount to bet:")
     if len(self.wager) == 0:
@@ -46,26 +70,16 @@ class Player(object):
     else:
       self.wager = int(self.wager)
       showInformation("You are betting $" + str(self.wager) + ". Ready to roll?")               
-		
+  # Displays players current amount of money	
   def displayBankroll(self):
     showInformation(self.name + " has $" + str(self.money) + " in the bank.")
-    
+  # Simulates rolling the 2 dice objects owned by the player 
   def throwDice(self):
     roll1 = self.die1.doRoll()
     roll2 = self.die2.doRoll()
     showInformation("You rolled a " + str(self.die1.currentValue) + " and a " + str(self.die2.currentValue) + ".\nThat totals to " + str(self.die1.currentValue + self.die2.currentValue))
-		
-class Dice(object):
-  def __init__(self, sides, currentValue):
-    self.sides = sides
-    self.currentValue = currentValue
-		
-  def setSides(self, num):
-    self.sides = num
-		
-  def doRoll(self):
-    self.currentValue = random.randint(1, self.sides)
 
+# Main method of program, contains created player objects and game logic
 def craps():
   # Welcome message
   showInformation("Welcome to Craps-tron 5000\nStart by entering your name. Place bets by typing in a number. The game ends when you run out of money or you place a bet for 0 dollars.")
@@ -121,7 +135,7 @@ def craps():
         showInformation("You rolled a " + str(currentThrow) + ". Roll again.")
         continue
         
-        
+  # Upon exit, show the player how they did by displaying how much money they had left     
   if bettor.money <= 0:
     showInformation("Tough luck! You went broke, better luck next time, " + bettor.name + ".")
   else:
