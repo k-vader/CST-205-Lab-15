@@ -110,7 +110,8 @@ def craps():
       showInformation("You rolled " + str(currentThrow) + " on the come out roll. Sorry, you lose.")
       bettor.money -= bettor.wager
       bettor.displayBankroll()
-      bettor.doWager()
+      if bettor.money > 0:
+        bettor.doWager()
       continue
     elif initialRoll:
       showInformation("You rolled " + str(currentThrow) + " on the come out roll. " + str(currentThrow) + " is now the point.")
@@ -121,7 +122,8 @@ def craps():
       showInformation("Oh, so sad. You crapped out by rolling a 7. You lose.")
       bettor.money -= bettor.wager
       bettor.displayBankroll()
-      bettor.doWager()
+      if bettor.money > 0:
+        bettor.doWager()
       initialRoll = True
       continue
     elif currentThrow == point and not initialRoll:
